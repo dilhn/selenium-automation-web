@@ -1,0 +1,14 @@
+# macOS specific
+.DS_Store
+
+# Maven target directory
+/target/
+
+# Ignore TestNG output folder
+/test-output/
+
+# Eclipse specific files
+/.settings/
+/.project
+/.classpath
+
