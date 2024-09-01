@@ -40,9 +40,6 @@ public class ChromeTestSample {
 		String reportPath = "target/reports/extent.html";
 		
 		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
-		
-        //sparkReporter.config().setDocumentTitle("Automation");
-        //sparkReporter.config().setReportName("Selenium TestNG Report");
         
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
@@ -50,8 +47,6 @@ public class ChromeTestSample {
         
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         
 		googleSearchPage = new GoogleSearchPage(driver);
 		googleSearchResultsPage = new GoogleSearchResultsPage(driver);
@@ -132,7 +127,7 @@ public class ChromeTestSample {
         
         amazonsearchresults.clickOnResulteGiftCard(sResult);
 
-        amazonproducts.clickOnAGiftCardDesign();  // okay up to here     
+        amazonproducts.clickOnAGiftCardDesign();   
         
         String designSrc = amazonproducts.getSRCofselectedGiftCardDesign();
 
