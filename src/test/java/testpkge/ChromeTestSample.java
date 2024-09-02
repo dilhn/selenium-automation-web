@@ -2,6 +2,8 @@ package testpkge;
 
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
+import base.WebDriverManager;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
@@ -9,7 +11,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -25,7 +26,8 @@ import utils.CSVDataReader;
 public class ChromeTestSample {
 	
 
-	WebDriver driver;
+	//WebDriver driver;
+	WebDriverManager webDriverManager;
     ExtentReports extent;
     ExtentTest test;
 	GoogleSearchPage googleSearchPage;
@@ -45,14 +47,15 @@ public class ChromeTestSample {
         extent.attachReporter(sparkReporter);
         extent.setSystemInfo("User Name", "Dilhan Nakandala");
         
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        webDriverManager = new WebDriverManager();
+        WebDriver wb = webDriverManager.initDriver();
+        webDriverManager.maximizeWindow();
         
-		googleSearchPage = new GoogleSearchPage(driver);
-		googleSearchResultsPage = new GoogleSearchResultsPage(driver);
-		amazonhome = new AmazonHomePage(driver);
-		amazonsearchresults = new AmazonSearchResultsPage(driver);
-		amazonproducts = new AmazonProductPage(driver);
+		googleSearchPage = new GoogleSearchPage(wb);
+		googleSearchResultsPage = new GoogleSearchResultsPage(wb);
+		amazonhome = new AmazonHomePage(wb);
+		amazonsearchresults = new AmazonSearchResultsPage(wb);
+		amazonproducts = new AmazonProductPage(wb);
 	}
 	
 	
@@ -74,10 +77,14 @@ public class ChromeTestSample {
 		
         test.log(com.aventstack.extentreports.Status.INFO, "Browser opened - navigate to Google.com");
         
-		driver.get(googleUrl);
+		//driver.get(googleUrl);
 		
-        String actualTitle = driver.getTitle();
-
+		webDriverManager.openPage(googleUrl);
+		webDriverManager.maximizeWindow();
+		
+        //String actualTitle = driver.getTitle();
+        
+        String actualTitle = webDriverManager.getPageTitle();
         
         try {
             Assert.assertEquals(actualTitle, title);
@@ -98,7 +105,9 @@ public class ChromeTestSample {
         
         amazonhome.refreshPage();
         
-        String currentURL = driver.getCurrentUrl();
+        //String currentURL = driver.getCurrentUrl();
+        
+        String currentURL = webDriverManager.getPageURL();
         
         try {
             Assert.assertEquals(currentURL, amazonUrl);
@@ -176,7 +185,7 @@ public class ChromeTestSample {
     @AfterClass
     public void tearDown() {
     	
-        driver.quit();
+    	webDriverManager.quitDriver();
         test.log(com.aventstack.extentreports.Status.INFO, "Browser closed");
         extent.flush();
     }
