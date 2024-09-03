@@ -37,9 +37,11 @@ public class AmazonHomePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
     
+	/*
     public void refreshPage() {
     	driver.navigate().refresh();
     }
+    */
     
     public void clickChangeDeliveryOptionButton() {
     	

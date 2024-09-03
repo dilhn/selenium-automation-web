@@ -104,7 +104,9 @@ public class ChromeTestSample {
         
         googleSearchResultsPage.clickOnSearchResults(amazonUrl);
         
-        amazonhome.refreshPage();
+        webDriverManager.refreshWindow();
+        
+        //amazonhome.refreshPage();
         
         //String currentURL = driver.getCurrentUrl();
         

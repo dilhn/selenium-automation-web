@@ -18,6 +18,11 @@ public class WebDriverManager {
     	
         driver.manage().window().maximize();
     }
+    
+    public void refreshWindow(){
+    	
+    	driver.navigate().refresh();
+    }
 	
     public void openPage(String url){
     	
