@@ -1,5 +1,10 @@
 package testpkge;
 
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
+import org.testng.Assert;
+
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import base.WebDriverManager;
@@ -11,10 +16,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import pages.AmazonHomePage;
 import pages.AmazonProductPage;
 import pages.AmazonSearchResultsPage;
@@ -93,7 +94,7 @@ public class ChromeTestSample {
             
         } catch (AssertionError e) {
         	
-            test.fail("Incorrect page title :- " + e.getMessage());
+            Assert.fail("Incorrect page title :- " + e.getMessage());
             throw e; 
         }
         
@@ -116,7 +117,7 @@ public class ChromeTestSample {
             
         } catch (AssertionError e) {
         	
-            test.fail("Incorrect page URL :- " + e.getMessage());
+            Assert.fail("Incorrect page URL :- " + e.getMessage());
             throw e; 
         }
         
@@ -151,7 +152,7 @@ public class ChromeTestSample {
             
         } catch (AssertionError e) {
         	
-            test.fail("Error :- " + e.getMessage());
+            Assert.fail("Error :- " + e.getMessage());
             throw e; 
         }
 
@@ -176,13 +177,13 @@ public class ChromeTestSample {
             
         } catch (AssertionError e) {
         	
-            test.fail("Error :- " + e.getMessage());
+            Assert.fail("Error :- " + e.getMessage());
             throw e; 
         }
         
 	}
 	
-    @AfterClass
+	@AfterClass
     public void tearDown() {
     	
     	webDriverManager.quitDriver();
