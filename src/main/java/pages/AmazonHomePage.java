@@ -29,6 +29,7 @@ public class AmazonHomePage {
     //By locationPopInnerDiv = By.id("a-popover-content-1");
     //By locationAdrListDiv = By.id("GLOWFeature_AddressList");
     By locationSpecifyDiv = By.id("GLUXSpecifyLocationDiv");
+    By inforPopDismissBtn = By.xpath("//input[@data-action-type='DISMISS']");
     
 
 	public AmazonHomePage(WebDriver driver) {
@@ -42,6 +43,13 @@ public class AmazonHomePage {
     	driver.navigate().refresh();
     }
     */
+	
+	public void clickInfoPopDismissBtn() {
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(inforPopDismissBtn));
+		
+		driver.findElement(inforPopDismissBtn).click();
+	}
     
     public void clickChangeDeliveryOptionButton() {
     	

@@ -81,7 +81,8 @@ public class ChromeTestSample {
 		//driver.get(googleUrl);
 		
 		webDriverManager.openPage(googleUrl);
-		webDriverManager.maximizeWindow();
+		
+		//webDriverManager.maximizeWindow();
 		
         //String actualTitle = driver.getTitle();
         
@@ -123,6 +124,8 @@ public class ChromeTestSample {
             throw e; 
         }
         
+        amazonhome.clickInfoPopDismissBtn();
+        
         amazonhome.clickChangeDeliveryOptionButton();
         
         amazonhome.selectDeliveryOption(country); 
@@ -131,7 +134,7 @@ public class ChromeTestSample {
         
         amazonhome.waitForLocationPopupClose();
         
-        amazonhome.waitForInfoPopupLocation(country); 
+        //amazonhome.waitForInfoPopupLocation(country); 
         
         amazonhome.typeSearchCriteria(sParameter);
         
