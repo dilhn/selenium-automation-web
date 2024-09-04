@@ -26,8 +26,6 @@ import utils.CSVDataReader;
 
 public class ChromeTestSample {
 	
-
-	//WebDriver driver;
 	WebDriverManager webDriverManager;
     ExtentReports extent;
     ExtentTest test;
@@ -37,13 +35,15 @@ public class ChromeTestSample {
 	AmazonSearchResultsPage amazonsearchresults;
 	AmazonProductPage amazonproducts;
 	
+	Map<String, String> testData;
+	
 	@BeforeClass
-	public void setup() {
+	public void setup() throws IOException {
 		
 		String reportPath = "target/reports/extent.html";
 		
 		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
-        
+		
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
         extent.setSystemInfo("User Name", "Dilhan Nakandala");
@@ -51,6 +51,8 @@ public class ChromeTestSample {
         webDriverManager = new WebDriverManager();
         WebDriver wb = webDriverManager.initDriver();
         webDriverManager.maximizeWindow();
+		
+		testData = CSVDataReader.readCSVData("src/main/resources/testData/data.csv");
         
 		googleSearchPage = new GoogleSearchPage(wb);
 		googleSearchResultsPage = new GoogleSearchResultsPage(wb);
@@ -60,31 +62,22 @@ public class ChromeTestSample {
 	}
 	
 	
-	@Test
-	public void amazonWebTest() throws IOException{
+	@Test(priority=1)
+	public void navigateToAmazonOnGoogle() {
 		
-		Map<String, String> testData = CSVDataReader.readCSVData("src/main/resources/testData/data.csv");
-
+		
 		String googleUrl = testData.get("url1");
 		String amazonUrl = testData.get("url2");
 		String title = testData.get("title");
-		String country = testData.get("country");
 		String amazonText = testData.get("sParam1");
-		String sParameter = testData.get("sParam2");
-		String sResult = testData.get("sResult");
 
 		
 		test = extent.createTest("Amazon Web Test for eGiftCards");
 		
         test.log(com.aventstack.extentreports.Status.INFO, "Browser opened - navigate to Google.com");
-        
-		//driver.get(googleUrl);
 		
 		webDriverManager.openPage(googleUrl);
 		
-		//webDriverManager.maximizeWindow();
-		
-        //String actualTitle = driver.getTitle();
         
         String actualTitle = webDriverManager.getPageTitle();
         
@@ -107,9 +100,6 @@ public class ChromeTestSample {
         
         webDriverManager.refreshWindow();
         
-        //amazonhome.refreshPage();
-        
-        //String currentURL = driver.getCurrentUrl();
         
         String currentURL = webDriverManager.getPageURL();
         
@@ -124,7 +114,16 @@ public class ChromeTestSample {
             throw e; 
         }
         
-        amazonhome.clickInfoPopDismissBtn();
+        //amazonhome.waitForInfoPopupLocation(country); 
+        
+	}
+	
+	@Test(priority=2)
+	public void changeDeliveryCountry() {
+		
+		String country = testData.get("country");
+		
+		amazonhome.clickInfoPopDismissBtn();
         
         amazonhome.clickChangeDeliveryOptionButton();
         
@@ -133,16 +132,25 @@ public class ChromeTestSample {
         amazonhome.clickLocationPopupDoneBtn();
         
         amazonhome.waitForLocationPopupClose();
-        
-        //amazonhome.waitForInfoPopupLocation(country); 
-        
-        amazonhome.typeSearchCriteria(sParameter);
+	}
+	
+	@Test(priority=3)
+	public void searchEGiftCard() {
+		
+		String sParameter = testData.get("sParam2");
+		String sResult = testData.get("sResult");
+		
+		amazonhome.typeSearchCriteria(sParameter);
         
         amazonhome.pressEnter(); 
         
         amazonsearchresults.clickOnResulteGiftCard(sResult);
-
-        amazonproducts.clickOnAGiftCardDesign();   
+	}
+	
+	@Test(priority=4)
+	public void verifyEGiftCardinPreview() {
+		
+		amazonproducts.clickOnAGiftCardDesign();   
         
         String designSrc = amazonproducts.getSRCofselectedGiftCardDesign();
 
@@ -162,7 +170,11 @@ public class ChromeTestSample {
         }
 
         amazonproducts.closeGiftCardPreview();
-        
+	}
+	
+	@Test(priority=5)
+	public void verifyEGiftCardAmtInPreview() {
+		
         amazonproducts.selectGiftCardAmount();
 
         String giftCardAmt = amazonproducts.getGiftCardAmountVal();
@@ -185,7 +197,7 @@ public class ChromeTestSample {
             Assert.fail("Error :- " + e.getMessage());
             throw e; 
         }
-        
+		
 	}
 	
 	@AfterClass
