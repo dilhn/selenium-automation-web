@@ -32,7 +32,7 @@ public class ExtentReportManager implements ITestListener{
 		
 	sparkReporter.config().setDocumentTitle("");
 	sparkReporter.config().setReportName("");
-	sparkReporter.config().setTheme(Theme.STANDARD);
+	sparkReporter.config().setTheme(Theme.DARK);
 		
 	extent = new ExtentReports();
 	extent.attachReporter(sparkReporter);
