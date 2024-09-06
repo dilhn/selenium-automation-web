@@ -5,12 +5,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.Assert;
 
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-
 import base.WebDriverManager;
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,8 +22,6 @@ import utils.CSVDataReader;
 public class ChromeTestSample {
 	
 	WebDriverManager webDriverManager;
-    ExtentReports extent;
-    ExtentTest test;
 	GoogleSearchPage googleSearchPage;
 	GoogleSearchResultsPage googleSearchResultsPage;
 	AmazonHomePage amazonhome;
@@ -39,14 +32,6 @@ public class ChromeTestSample {
 	
 	@BeforeClass
 	public void setup() throws IOException {
-		
-		String reportPath = "target/reports/extent.html";
-		
-		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
-		
-        extent = new ExtentReports();
-        extent.attachReporter(sparkReporter);
-        extent.setSystemInfo("User Name", "Dilhan Nakandala");
         
         webDriverManager = new WebDriverManager();
         WebDriver wb = webDriverManager.initDriver();
@@ -70,21 +55,18 @@ public class ChromeTestSample {
 		String amazonUrl = testData.get("url2");
 		String title = testData.get("title");
 		String amazonText = testData.get("sParam1");
-
 		
-		test = extent.createTest("Amazon Web Test for eGiftCards");
+		//test = extent.createTest("Amazon Web Test for eGiftCards");
+        //test.log(com.aventstack.extentreports.Status.INFO, "Browser opened - navigate to Google.com");
 		
-        test.log(com.aventstack.extentreports.Status.INFO, "Browser opened - navigate to Google.com");
-		
-		webDriverManager.openPage(googleUrl);
-		
+		webDriverManager.openPage(googleUrl);	
         
         String actualTitle = webDriverManager.getPageTitle();
         
         try {
             Assert.assertEquals(actualTitle, title);
             
-            test.pass("Page title is as expected :- " + actualTitle);
+            //test.pass("Page title is as expected :- " + actualTitle);
             
         } catch (AssertionError e) {
         	
@@ -106,7 +88,7 @@ public class ChromeTestSample {
         try {
             Assert.assertEquals(currentURL, amazonUrl);
             
-            test.pass("Page URL is as expected :- " + currentURL);
+            //test.pass("Page URL is as expected :- " + currentURL);
             
         } catch (AssertionError e) {
         	
@@ -161,7 +143,7 @@ public class ChromeTestSample {
         try {
             Assert.assertEquals(previewSrc, designSrc);
             
-            test.pass("Selected eGift card Design & Preview images are the same");
+            //test.pass("Selected eGift card Design & Preview images are the same");
             
         } catch (AssertionError e) {
         	
@@ -190,7 +172,7 @@ public class ChromeTestSample {
         try {
             Assert.assertEquals(value1, value2, 0.01);
             
-            test.pass("Selected eGift card amount and the amount displayed on the preview are the same");
+            //test.pass("Selected eGift card amount and the amount displayed on the preview are the same");
             
         } catch (AssertionError e) {
         	
@@ -204,8 +186,7 @@ public class ChromeTestSample {
     public void tearDown() {
     	
     	webDriverManager.quitDriver();
-        test.log(com.aventstack.extentreports.Status.INFO, "Browser closed");
-        extent.flush();
+        //test.log(com.aventstack.extentreports.Status.INFO, "Browser closed");
     }
 	
 
