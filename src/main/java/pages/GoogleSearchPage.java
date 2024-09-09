@@ -1,28 +1,26 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
+import base.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
-public class GoogleSearchPage {
-
-	WebDriver driver;
+public class GoogleSearchPage extends WebDriverManager{
 	
     By searchBox = By.name("q");
 	
     public GoogleSearchPage(WebDriver driver) {
     	
-        this.driver = driver;
+    	super(driver); 
     }
     
-    public void enterSearchCriteria(String searchParam) {
-    	
-        driver.findElement(searchBox).sendKeys(searchParam);
+    public void typeSearch(String search) {
+    	typeText(searchBox,search);
     }
+
     
-    public void pressEnter() {
-    	
-        driver.findElement(searchBox).sendKeys(Keys.RETURN); 
-        
+    public void pressSearchEnter() {
+    	pressEnter(searchBox);
     }
+
+
 }

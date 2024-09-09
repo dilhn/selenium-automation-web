@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 import pages.AmazonHomePage;
 import pages.AmazonProductPage;
 import pages.AmazonSearchResultsPage;
@@ -21,6 +23,7 @@ import utils.CSVDataReader;
 
 public class ChromeTestSample {
 	
+	WebDriver driver;
 	WebDriverManager webDriverManager;
 	GoogleSearchPage googleSearchPage;
 	GoogleSearchResultsPage googleSearchResultsPage;
@@ -33,17 +36,17 @@ public class ChromeTestSample {
 	@BeforeClass
 	public void setup() throws IOException {
         
-        webDriverManager = new WebDriverManager();
-        WebDriver wb = webDriverManager.initDriver();
+		driver = new ChromeDriver();
+        webDriverManager = new WebDriverManager(driver);
         webDriverManager.maximizeWindow();
 		
 		testData = CSVDataReader.readCSVData("src/main/resources/testData/data.csv");
         
-		googleSearchPage = new GoogleSearchPage(wb);
-		googleSearchResultsPage = new GoogleSearchResultsPage(wb);
-		amazonhome = new AmazonHomePage(wb);
-		amazonsearchresults = new AmazonSearchResultsPage(wb);
-		amazonproducts = new AmazonProductPage(wb);
+		googleSearchPage = new GoogleSearchPage(driver);
+		googleSearchResultsPage = new GoogleSearchResultsPage(driver);
+		amazonhome = new AmazonHomePage(driver);
+		amazonsearchresults = new AmazonSearchResultsPage(driver);
+		amazonproducts = new AmazonProductPage(driver);
 	}
 	
 	
@@ -56,8 +59,6 @@ public class ChromeTestSample {
 		String title = testData.get("title");
 		String amazonText = testData.get("sParam1");
 		
-		//test = extent.createTest("Amazon Web Test for eGiftCards");
-        //test.log(com.aventstack.extentreports.Status.INFO, "Browser opened - navigate to Google.com");
 		
 		webDriverManager.openPage(googleUrl);	
         
@@ -74,11 +75,11 @@ public class ChromeTestSample {
             throw e; 
         }
         
-        googleSearchPage.enterSearchCriteria(amazonText);
+        googleSearchPage.typeSearch(amazonText); // modified
         
-        googleSearchPage.pressEnter();
+        googleSearchPage.pressSearchEnter(); // modified
         
-        googleSearchResultsPage.clickOnSearchResults(amazonUrl);
+        googleSearchResultsPage.clickOnSearchResults(amazonUrl); // modified
         
         webDriverManager.refreshWindow();
         

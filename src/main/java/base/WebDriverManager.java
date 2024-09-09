@@ -1,13 +1,21 @@
 package base;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class WebDriverManager {
 
-	private WebDriver driver;
+	protected WebDriver driver;
 	
-	public WebDriver initDriver() {
+	  
+    public WebDriverManager(WebDriver driver) {
+        this.driver = driver;
+    }
+	
+	
+	public WebDriver initDriver() { // no longer used
 		
         driver = new ChromeDriver();
         return driver;
@@ -29,7 +37,6 @@ public class WebDriverManager {
         driver.get(url);
     }
     
-	
 	public String getPageTitle() {
 		
 		return driver.getTitle();
@@ -40,6 +47,18 @@ public class WebDriverManager {
 		return driver.getCurrentUrl();
 	}
 	
+	public void typeText(By locator, String value) {
+        driver.findElement(locator).sendKeys(value);
+	}
+	
+	public void clickElement(By locator) {
+		driver.findElement(locator).click();
+	}
+	
+    public void pressEnter(By locator) {
+        driver.findElement(locator).sendKeys(Keys.RETURN);
+    }
+    
 	public void quitDriver() {
         if (driver != null) {
             driver.quit();
