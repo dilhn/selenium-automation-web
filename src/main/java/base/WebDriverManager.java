@@ -1,9 +1,14 @@
 package base;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverManager {
 
@@ -13,14 +18,6 @@ public class WebDriverManager {
     public WebDriverManager(WebDriver driver) {
         this.driver = driver;
     }
-	
-	
-	public WebDriver initDriver() { // no longer used
-		
-        driver = new ChromeDriver();
-        return driver;
-		
-	}
 	
     public void maximizeWindow(){
     	
@@ -53,6 +50,15 @@ public class WebDriverManager {
 	
 	public void clickElement(By locator) {
 		driver.findElement(locator).click();
+	}
+	
+	public void selectDropDownValue(By locator, String country) {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement dropdownElement = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        Select select = new Select(dropdownElement);
+        select.selectByVisibleText(country);
+        
 	}
 	
     public void pressEnter(By locator) {

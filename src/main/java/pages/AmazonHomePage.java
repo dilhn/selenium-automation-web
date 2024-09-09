@@ -3,18 +3,15 @@ package pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import base.WebDriverManager;
 
-public class AmazonHomePage {
 
-    WebDriver driver;
+public class AmazonHomePage extends WebDriverManager{
+
     WebDriverWait wait;
     
     By locationPopWrapDiv = By.className("a-popover-wrapper");
@@ -34,63 +31,69 @@ public class AmazonHomePage {
 
 	public AmazonHomePage(WebDriver driver) {
 		
-        this.driver = driver;
+        super(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    
-	/*
-    public void refreshPage() {
-    	driver.navigate().refresh();
-    }
-    */
+	
+
 	
 	public void clickInfoPopDismissBtn() {
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(inforPopDismissBtn));
 		
-		driver.findElement(inforPopDismissBtn).click();
+		//driver.findElement(inforPopDismissBtn).click();
+		clickElement(inforPopDismissBtn);
 	}
     
     public void clickChangeDeliveryOptionButton() {
     	
-        driver.findElement(locationPopLink).click();
+       //driver.findElement(locationPopLink).click();
+    	clickElement(locationPopLink);
     }
     
     public void selectDeliveryOption(String country) {
     	
     	wait.until(ExpectedConditions.visibilityOfElementLocated(locationSpecifyDiv)); // outer element
     	
-        WebElement dropdownElement = wait.until(ExpectedConditions.visibilityOfElementLocated(countrySelector));
+    	
+        //WebElement dropdownElement = wait.until(ExpectedConditions.visibilityOfElementLocated(countrySelector));
         //WebElement dropdownElement = driver.findElement(locationCountriesDdown);
         
-        Select select = new Select(dropdownElement);
-        select.selectByVisibleText(country);
-
+        //Select select = new Select(dropdownElement);
+        //select.selectByVisibleText(country);
+    	selectDropDownValue(countrySelector, country);
         
     }
     
     
     public void clickLocationPopupDoneBtn() {
 
-        WebElement button = driver.findElement(locationPopDoneBtn);
+        //WebElement button = driver.findElement(locationPopDoneBtn);
         
-        button.click();
+        //button.click();
         
-    }
-    
-    public void waitForLocationPopupClose() {
-    	
-    	wait.until(ExpectedConditions.invisibilityOfElementLocated(locationPopWrapDiv));
-    	
+        clickElement(locationPopDoneBtn);
+        
     }
     
     /*
+    public void waitForLocationPopupClose() {
+    	
+    	wait.until(ExpectedConditions.invisibilityOfElementLocated(locationPopWrapDiv)); // *** moved the line to bottom
+    	
+    }
+    */
+    
+    /* no longer used?
     public void waitForInfoPopupLocation1(String country) {
     	
     	wait.until(ExpectedConditions.textToBePresentInElementLocated(strongTxt, country));
     }
     */
     
+    /* 
+     * CHECK LATER
+     * 
     public boolean waitForInfoPopupLocation(String country) {
         
     	try {
@@ -100,8 +103,11 @@ public class AmazonHomePage {
             return false;
         }
     }
+    */
     
-    
+    /* 
+     * CHECK LATER
+     * 
     public String getDeliveryLocationText() {
 
     	wait.until(ExpectedConditions.visibilityOfElementLocated(deleverToDiv));
@@ -117,15 +123,20 @@ public class AmazonHomePage {
         return countryText;
         
     }
+    */
     
     public void typeSearchCriteria(String searchTerm) {
     	
-    	driver.findElement(searchBoxInput).sendKeys(searchTerm);
+    	wait.until(ExpectedConditions.invisibilityOfElementLocated(locationPopWrapDiv)); // *** added from the top
+    	//driver.findElement(searchBoxInput).sendKeys(searchTerm);
+    	typeText(searchBoxInput, searchTerm);
+    	
     }
     
-    public void pressEnter() {
+    public void pressEnterOnResults() { 
     	
-    	driver.findElement(searchBoxInput).sendKeys(Keys.RETURN);
+    	pressEnter(searchBoxInput);
+    	//driver.findElement(searchBoxInput).sendKeys(Keys.RETURN);
     }
     
     

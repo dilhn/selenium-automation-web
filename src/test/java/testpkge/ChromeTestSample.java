@@ -114,7 +114,7 @@ public class ChromeTestSample {
         
         amazonhome.clickLocationPopupDoneBtn();
         
-        amazonhome.waitForLocationPopupClose();
+        //amazonhome.waitForLocationPopupClose();
 	}
 	
 	@Test(priority=3)
@@ -125,7 +125,7 @@ public class ChromeTestSample {
 		
 		amazonhome.typeSearchCriteria(sParameter);
         
-        amazonhome.pressEnter(); 
+        amazonhome.pressEnterOnResults(); 
         
         amazonsearchresults.clickOnResulteGiftCard(sResult);
 	}

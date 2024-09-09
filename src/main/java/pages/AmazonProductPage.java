@@ -9,9 +9,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AmazonProductPage {
+import base.WebDriverManager;
+
+public class AmazonProductPage extends WebDriverManager{
 	
-	WebDriver driver;
+	//WebDriver driver;
     WebDriverWait wait;
     
 	By selectedDesignImg = By.id("gc-standard-design-image");
@@ -26,20 +28,23 @@ public class AmazonProductPage {
 	
 	
 	public AmazonProductPage(WebDriver driver) {
-        this.driver = driver;
+        //this.driver = driver;
+		super(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 	
     public void clickOnAGiftCardDesign() {
     	
         try {
-            WebElement imageElement = driver.findElement(designOptImgMain);
-            imageElement.click();
+            //WebElement imageElement = driver.findElement(designOptImgMain);
+            //imageElement.click();
+            clickElement(designOptImgMain); // from base page
         }
         
         catch(NoSuchElementException e) {
-        WebElement imageElement = driver.findElement(DesignOptImgAlt);
-        imageElement.click();
+        //WebElement imageElement = driver.findElement(DesignOptImgAlt);
+        //imageElement.click();
+        clickElement(DesignOptImgAlt); // from base page
         }
         // ALT='Thank You Flowers'
     }
@@ -55,7 +60,8 @@ public class AmazonProductPage {
     
     public void clickonSelectedGiftCardDesign() {
     	
-    	driver.findElement(selectedDesignImg).click();
+    	//driver.findElement(selectedDesignImg).click();
+    	clickElement(selectedDesignImg); // from base page
     }
     
     public String getSRCofGiftCardPreview() {
@@ -69,20 +75,24 @@ public class AmazonProductPage {
     
     public void closeGiftCardPreview() {
     	
-        driver.findElement(previewPopClose).click();
+        //driver.findElement(previewPopClose).click(); 
+        clickElement(previewPopClose); // from base page
     }
     
     public void selectGiftCardAmount() {
     	
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(previewPopCloseBtn));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(previewPopCloseBtn)); // wait 1
         
-        wait.until(ExpectedConditions.visibilityOfElementLocated(giftCardAmtBtn));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(giftCardAmtBtn)); // wait 2
         
-        WebElement btnAmt = wait.until(ExpectedConditions.elementToBeClickable(giftCardAmtBtn));
+        //WebElement btnAmt = wait.until(ExpectedConditions.elementToBeClickable(giftCardAmtBtn));
         
-        btnAmt.click();
+        wait.until(ExpectedConditions.elementToBeClickable(giftCardAmtBtn)); // wait 3
         
-        System.out.println("Selected (Amt) is :"+btnAmt.getText());
+        clickElement(giftCardAmtBtn);
+        
+        //btnAmt.click();
+        //System.out.println("Selected (Amt) is :"+btnAmt.getText());
     }
     
     public String getGiftCardAmountVal() {
