@@ -3,9 +3,9 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import base.WebDriverManager;
+import base.BasePage;
 
-public class GoogleSearchResultsPage extends WebDriverManager{
+public class GoogleSearchResultsPage extends BasePage{
 
 	//WebDriver driver;
 	

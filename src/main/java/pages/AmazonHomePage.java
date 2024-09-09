@@ -7,10 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import base.WebDriverManager;
+import base.BasePage;
 
 
-public class AmazonHomePage extends WebDriverManager{
+public class AmazonHomePage extends BasePage{
 
     WebDriverWait wait;
     

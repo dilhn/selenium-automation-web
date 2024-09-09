@@ -1,10 +1,10 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
-import base.WebDriverManager;
+import base.BasePage;
 import org.openqa.selenium.By;
 
-public class GoogleSearchPage extends WebDriverManager{
+public class GoogleSearchPage extends BasePage{
 	
     By searchBox = By.name("q");
 	

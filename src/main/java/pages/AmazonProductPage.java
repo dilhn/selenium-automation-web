@@ -9,9 +9,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import base.WebDriverManager;
+import base.BasePage;
 
-public class AmazonProductPage extends WebDriverManager{
+public class AmazonProductPage extends BasePage{
 	
 	//WebDriver driver;
     WebDriverWait wait;

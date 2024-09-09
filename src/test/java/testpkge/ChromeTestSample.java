@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.Assert;
 
-import base.WebDriverManager;
+import base.BasePage;
 
 import java.io.IOException;
 import java.util.Map;
@@ -24,7 +24,7 @@ import utils.CSVDataReader;
 public class ChromeTestSample {
 	
 	WebDriver driver;
-	WebDriverManager webDriverManager;
+	BasePage basepage;
 	GoogleSearchPage googleSearchPage;
 	GoogleSearchResultsPage googleSearchResultsPage;
 	AmazonHomePage amazonhome;
@@ -37,8 +37,8 @@ public class ChromeTestSample {
 	public void setup() throws IOException {
         
 		driver = new ChromeDriver();
-        webDriverManager = new WebDriverManager(driver);
-        webDriverManager.maximizeWindow();
+		basepage = new BasePage(driver);
+		basepage.maximizeWindow();
 		
 		testData = CSVDataReader.readCSVData("src/main/resources/testData/data.csv");
         
@@ -60,9 +60,9 @@ public class ChromeTestSample {
 		String amazonText = testData.get("sParam1");
 		
 		
-		webDriverManager.openPage(googleUrl);	
+		basepage.openPage(googleUrl);	
         
-        String actualTitle = webDriverManager.getPageTitle();
+        String actualTitle = basepage.getPageTitle();
         
         try {
             Assert.assertEquals(actualTitle, title);
@@ -81,10 +81,10 @@ public class ChromeTestSample {
         
         googleSearchResultsPage.clickOnSearchResults(amazonUrl); // modified
         
-        webDriverManager.refreshWindow();
+        basepage.refreshWindow();
         
         
-        String currentURL = webDriverManager.getPageURL();
+        String currentURL = basepage.getPageURL();
         
         try {
             Assert.assertEquals(currentURL, amazonUrl);
@@ -186,7 +186,7 @@ public class ChromeTestSample {
 	@AfterClass
     public void tearDown() {
     	
-    	webDriverManager.quitDriver();
+		basepage.quitDriver();
         //test.log(com.aventstack.extentreports.Status.INFO, "Browser closed");
     }
 	
